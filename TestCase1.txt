@@ -1,0 +1,6 @@
+$$
+$$
+integer a;
+$$
+print(a);
+$$
