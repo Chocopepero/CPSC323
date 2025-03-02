@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall
+CXXFLAGS = -std=c++17 -Wall -static -static-libgcc -static-libstdc++
 
 SRCS = main.cpp lexer.cpp
 OBJS = $(SRCS:.cpp=.o)
