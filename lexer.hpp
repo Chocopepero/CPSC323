@@ -12,6 +12,6 @@ typedef struct
     std::string lexeme;
 } TokenResult;
 
-std::vector<TokenResult> lexer(std::istream &stream = std::cin);
+TokenResult lexer(std::istream &stream = std::cin);
 
 #endif // LEXER_H

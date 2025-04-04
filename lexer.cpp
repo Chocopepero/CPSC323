@@ -19,9 +19,8 @@ std::set<std::string> keywords = {"function", "integer", "boolean", "real",
                                   "if",       "else",    "endif",   "while",
                                   "endwhile", "return",  "scan",    "print"};
 
-std::vector<TokenResult> lexer(std::istream &stream) {
+TokenResult lexer(std::istream &stream) {
   State state = START;
-  std::vector<TokenResult> tokens;
   std::string lexeme;
   char c;
 
@@ -48,13 +47,14 @@ std::vector<TokenResult> lexer(std::istream &stream) {
         lexeme += c;
         stream.get(c);
         lexeme += c;
+        return {"Separator", lexeme};
       } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '=' ||
-                 c == '<' || c == '>') {
+                 c == '<' || c == '>' || c == '!') {
         state = OPERAND;
         lexeme += c;
       } else {
         state = DONE;
-        tokens.push_back({"Invalid", std::string(1, c)});
+        return {"Invalid", std::string(1, c)};
       }
       break;
 
@@ -66,8 +66,7 @@ std::vector<TokenResult> lexer(std::istream &stream) {
       }
       stream.putback(c);
       state = DONE;
-      tokens.push_back(
-          {keywords.count(lexeme) ? "Keyword" : "Identifier", lexeme});
+      return {keywords.count(lexeme) ? "Keyword" : "Identifier", lexeme};
       break;
 
     case INTEGER:
@@ -79,7 +78,7 @@ std::vector<TokenResult> lexer(std::istream &stream) {
       if (c == '.') {
         lexeme += c;
         if (!stream.get(c) || !isdigit(c)) {
-          tokens.push_back({"Invalid", lexeme});
+          return {"Invalid", lexeme};
           state = DONE;
         } else {
           state = REAL;
@@ -88,7 +87,7 @@ std::vector<TokenResult> lexer(std::istream &stream) {
       } else {
         stream.putback(c);
         state = DONE;
-        tokens.push_back({"Integer", lexeme});
+        return {"Integer", lexeme};
       }
       break;
 
@@ -100,7 +99,7 @@ std::vector<TokenResult> lexer(std::istream &stream) {
       }
       stream.putback(c);
       state = DONE;
-      tokens.push_back({"Real", lexeme});
+      return {"Real", lexeme};
       break;
 
     case COMMENT:
@@ -116,17 +115,40 @@ std::vector<TokenResult> lexer(std::istream &stream) {
     case SEPARATOR:
       state = DONE;
       stream.putback(c);
-      tokens.push_back({"Separator", lexeme});
+      return {"Separator", lexeme};
       break;
 
-    case OPERAND:
-      if (c == '=') {
-        lexeme += c;
+    case OPERAND: {
+      // For '<': form "<=" if possible.
+      if (lexeme == "<") {
+        if (c == '=') {
+          lexeme += c;
+        } else {
+          stream.putback(c);
+        }
       }
-      stream.putback(c);
+      // For '=': form "=>" if the next character is '>', otherwise "==" if the
+      // next is '='.
+      else if (lexeme == "=") {
+        if (c == '>') {
+          lexeme += c; // Now lexeme becomes "=>"
+        } else if (c == '=') {
+          lexeme += c; // Now lexeme becomes "=="
+        } else {
+          stream.putback(c);
+        }
+      }
+      // For '!': form "!=" if supported.
+      else if (lexeme == "!") {
+        if (c == '=') {
+          lexeme += c; // Now lexeme becomes "!="
+        } else {
+          stream.putback(c);
+        }
+      }
       state = DONE;
-      tokens.push_back({"Operand", lexeme});
-      break;
+      return {"Operator", lexeme};
+    }
 
     case DONE:
       stream.putback(c);
@@ -135,5 +157,9 @@ std::vector<TokenResult> lexer(std::istream &stream) {
       break;
     }
   }
-  return tokens;
+  if (stream.eof()) {
+    return {"EOF", ""};
+  } else {
+    return {"Invalid", std::string(1, c)};
+  }
 }
