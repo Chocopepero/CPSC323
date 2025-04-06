@@ -5,7 +5,8 @@ function factorial (n integer)
     if (n == 0) { 
         return 1; 
     } else { 
-        return n * factorial(n - 1); 
+        temp = n - 1;
+        return n * factorial(temp); 
     } endif
 }
 

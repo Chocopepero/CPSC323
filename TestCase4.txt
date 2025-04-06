@@ -1,0 +1,19 @@
+[* Program to calculate what the cost of something is after tax (at 8% tax rate) *]
+$$
+function taxCalculate (real n)
+{
+    if (n <= 0.0 ) {
+        return 0.0;
+    } endif
+    return 0.08 * taxCalculate(n);
+}
+
+$$
+real input, afterTax;
+$$
+scan(input);
+
+afterTax = taxCalculate(input);
+
+print(afterTax);
+$$

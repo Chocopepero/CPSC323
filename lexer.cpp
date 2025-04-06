@@ -19,12 +19,17 @@ std::set<std::string> keywords = {"function", "integer", "boolean", "real",
                                   "if",       "else",    "endif",   "while",
                                   "endwhile", "return",  "scan",    "print"};
 
+extern int line_number;
+
 TokenResult lexer(std::istream &stream) {
   State state = START;
   std::string lexeme;
   char c;
 
   while (stream.get(c)) {
+    if (c == '\n') {
+      line_number++; // Increment line number on newline
+    }
     switch (state) {
     case START:
       if (isalpha(c)) {

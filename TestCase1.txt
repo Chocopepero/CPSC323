@@ -3,4 +3,6 @@ $$
 integer a;
 $$
 print(a);
+=>
+<=
 $$

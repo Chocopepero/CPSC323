@@ -1,19 +1,18 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -static -static-libgcc -static-libstdc++
-
-SRCS = main.cpp lexer.cpp
-OBJS = $(SRCS:.cpp=.o)
+CXXFLAGS = -std=c++17 -Wall -g
+SOURCES = main.cpp lexer.cpp syntax_analyzer.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
 TARGET = lexer
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJECTS) $(TARGET)
 
 .PHONY: all clean
