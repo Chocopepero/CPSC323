@@ -9,13 +9,12 @@ const bool debug = true; // For debugging output
 int line_number = 1;
 
 // Get the next token from the lexer
-void nextToken() { currentToken = lexer(std::cin);
- }
+void nextToken() { currentToken = lexer(std::cin); }
 
 // Error handling: print an error message and exit
 void error(const std::string &msg) {
-  std::cerr << "Syntax error: " << msg << ", token: " << currentToken.lexeme
-            << std::endl;
+  std::cerr << "Syntax error: " << msg << " @ line "<< std::to_string(line_number) << ", token: " << currentToken.lexeme
+            << '\n';
   exit(1);
 }
 
@@ -27,9 +26,11 @@ void match(TokenResult expected) {
               << "\tLexeme: " << currentToken.lexeme << '\n';
     nextToken();
   } else {
-    error("At line " + std::to_string(line_number) + " Expected " + expected.token + (expected.lexeme != "" ? (" " + expected.lexeme) : "")
-            + " but found " + currentToken.token + " " + currentToken.lexeme);
-    }
+    error("At line " + std::to_string(line_number) + " Expected " +
+          expected.token +
+          (expected.lexeme != "" ? (" " + expected.lexeme) : "") +
+          " but found " + currentToken.token + " " + currentToken.lexeme);
+  }
 }
 
 void Rat25S() {
@@ -52,9 +53,9 @@ void Rat25S() {
 // R2. <Opt Function Definitions> ::= <Function Definitions> | <Empty>
 void OptFunctDef() {
   if (currentToken.token == "Keyword" && currentToken.lexeme == "function") {
+    FunctionDefinition();
     if (debug)
       std::cout << "<Opt Function Definitions> ::= <Function Definitions>\n";
-    FunctionDefinition();
 
   } else {
     if (debug) {
@@ -67,10 +68,10 @@ void OptFunctDef() {
 void FunctionDefinition() {
   Function();
   if (currentToken.token == "Keyword" && currentToken.lexeme == "function") {
+    FunctionDefinition();
     if (debug)
       std::cout
           << "<Function Definitions> ::= <Function> <Function Definitions>\n";
-    FunctionDefinition();
   } else {
     if (debug)
       std::cout << "<Function Definitions> ::= <Function>\n";
@@ -110,9 +111,9 @@ void Function() {
 // R5. <Opt Parameter List> ::= <Parameter List> | <Empty>
 void OptParameterList() {
   if (currentToken.token == "Identifier") {
+    ParameterList();
     if (debug)
       std::cout << "<Opt Parameter List> ::= <Parameter List>\n";
-    ParameterList();
   } else {
     if (debug)
       std::cout << "<Opt Parameter List> ::= <Empty>\n";
@@ -124,10 +125,10 @@ void ParameterList() {
   Parameter();
   if (currentToken.token == "Separator" && currentToken.lexeme == ",") {
     match({"Separator", ","});
+    ParameterList();
     if (debug) {
       std::cout << "<Parameter List> ::= <Parameter> , <Parameter List>\n";
     }
-    ParameterList();
   } else {
     if (debug)
       std::cout << "<Parameter List> ::= <Parameter>\n";
@@ -178,9 +179,9 @@ void OptDeclarationList() {
   if (currentToken.token == "Keyword" &&
       (currentToken.lexeme == "integer" || currentToken.lexeme == "boolean" ||
        currentToken.lexeme == "real")) {
+    DeclarationList();
     if (debug)
       std::cout << "<Opt Declaration List> ::= <Declaration List>\n";
-    DeclarationList();
   } else {
     if (debug)
       std::cout << "<Opt Declaration List> ::= <Empty>\n";
@@ -196,10 +197,10 @@ void DeclarationList() {
   if (currentToken.token == "Keyword" &&
       (currentToken.lexeme == "integer" || currentToken.lexeme == "boolean" ||
        currentToken.lexeme == "real")) {
+    DeclarationList();
     if (debug)
       std::cout
           << "<Declaration List> ::= <Declaration> ; <Declaration List>\n";
-    DeclarationList();
   } else {
     if (debug)
       std::cout << "<Declaration List> ::= <Declaration> ;\n";
@@ -208,10 +209,10 @@ void DeclarationList() {
 
 // R12. <Declaration> ::= <Qualifier> <IDs>
 void Declaration() {
-  if (debug)
-    std::cout << "<Declaration> ::= <Qualifier> <IDs>\n";
   Qualifier();
   IDs();
+  if (debug)
+    std::cout << "<Declaration> ::= <Qualifier> <IDs>\n";
 }
 
 // R13. <IDs> ::= <Identifier> | <Identifier>, <IDs>
@@ -220,9 +221,9 @@ void IDs() {
 
   if (currentToken.token == "Separator" && currentToken.lexeme == ",") {
     match({"Separator", ","});
+    IDs();
     if (debug)
       std::cout << "<IDs> ::= <Identifier>, <IDs>\n";
-    IDs();
   } else {
     if (debug)
       std::cout << "<IDs> ::= <Identifier>\n";
@@ -236,9 +237,9 @@ void StatementList() {
   if (currentToken.token != "Separator" ||
       (currentToken.token == "Separator" && currentToken.lexeme != "}" &&
        currentToken.lexeme != "$$")) {
+    StatementList();
     if (debug)
       std::cout << "<Statement List> ::= <Statement> <Statement List>\n";
-    StatementList();
   } else {
     if (debug)
       std::cout << "<Statement List> ::= <Statement>\n";
@@ -249,34 +250,34 @@ void StatementList() {
 // <Scan> | <While>
 void Statement() {
   if (currentToken.token == "Separator" && currentToken.lexeme == "{") {
+    Compound();
     if (debug)
       std::cout << "<Statement> ::= <Compound>\n";
-    Compound();
   } else if (currentToken.token == "Identifier") {
+    Assign();
     if (debug)
       std::cout << "<Statement> ::= <Assign>\n";
-    Assign();
   } else if (currentToken.token == "Keyword") {
     if (currentToken.lexeme == "if") {
+      If();
       if (debug)
         std::cout << "<Statement> ::= <If>\n";
-      If();
     } else if (currentToken.lexeme == "return") {
+      Return();
       if (debug)
-        Return();
-      std::cout << "<Statement> ::= <Return>\n";
+        std::cout << "<Statement> ::= <Return>\n";
     } else if (currentToken.lexeme == "print") {
+      Print();
       if (debug)
         std::cout << "<Statement> ::= <Print>\n";
-      Print();
     } else if (currentToken.lexeme == "scan") {
+      Scan();
       if (debug)
         std::cout << "<Statement> ::= <Scan>\n";
-      Scan();
     } else if (currentToken.lexeme == "while") {
+      While();
       if (debug)
         std::cout << "<Statement> ::= <While>\n";
-      While();
     } else {
       error("Invalid keyword for statement");
     }
@@ -287,21 +288,21 @@ void Statement() {
 
 // R16. <Compound> ::= { <Statement List> }
 void Compound() {
-  if (debug)
-    std::cout << "<Compound> ::= { <Statement List> }\n";
   match({"Separator", "{"});
   StatementList();
   match({"Separator", "}"});
+  if (debug)
+    std::cout << "<Compound> ::= { <Statement List> }\n";
 }
 
 // R17. <Assign> ::= <Identifier> = <Expression> ;
 void Assign() {
-  if (debug)
-    std::cout << "<Assign> ::= <Identifier> = <Expression> ;\n";
   match({"Identifier", ""});
   match({"Operator", "="});
   Expression();
   match({"Separator", ";"});
+  if (debug)
+    std::cout << "<Assign> ::= <Identifier> = <Expression> ;\n";
 }
 
 // R18. <If> ::= if ( <Condition> ) <Statement> endif | if ( <Condition> )
@@ -350,45 +351,45 @@ void Return() {
 // R20. <Print> ::= print ( <Expression> );
 void Print() {
 
-  if (debug)
-    std::cout << "<Print> ::= print ( <Expression> );\n";
   match({"Keyword", "print"});
   match({"Separator", "("});
   Expression();
   match({"Separator", ")"});
   match({"Separator", ";"});
+  if (debug)
+    std::cout << "<Print> ::= print ( <Expression> );\n";
 }
 
 // R21. <Scan> ::= scan ( <IDs> );
 void Scan() {
-  if (debug)
-    std::cout << "<Scan> ::= scan ( <IDs> );\n";
   match({"Keyword", "scan"});
   match({"Separator", "("});
   IDs();
   match({"Separator", ")"});
   match({"Separator", ";"});
+  if (debug)
+    std::cout << "<Scan> ::= scan ( <IDs> );\n";
 }
 
 // R22. <While> ::= while ( <Condition> ) <Statement> endwhile
 void While() {
-  if (debug)
-    std::cout << "<While> ::= while ( <Condition> ) <Statement> endwhile\n";
   match({"Keyword", "while"});
   match({"Separator", "("});
   Condition();
   match({"Separator", ")"});
   Statement();
   match({"Keyword", "endwhile"});
+  if (debug)
+    std::cout << "<While> ::= while ( <Condition> ) <Statement> endwhile\n";
 }
 
 // R23. <Condition> ::= <Expression> <Relop> <Expression>
 void Condition() {
-  if (debug)
-    std::cout << "<Condition> ::= <Expression> <Relop> <Expression>\n";
   Expression();
   Relop();
   Expression();
+  if (debug)
+    std::cout << "<Condition> ::= <Expression> <Relop> <Expression>\n";
 }
 
 // R24. <Relop> ::= == | != | > | < | <= | =>
@@ -428,26 +429,26 @@ void Relop() {
 
 // R25. <Expression> ::= <Term> <Expression'>
 void Expression() {
-  if (debug)
-    std::cout << "<Expression> ::= <Term> <Expression'>\n";
   Term();
   ExpressionPrime();
+  if (debug)
+    std::cout << "<Expression> ::= <Term> <Expression'>\n";
 }
 
 // <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | epsilon
 void ExpressionPrime() {
   if (currentToken.token == "Operator" && currentToken.lexeme == "+") {
-    if (debug)
-      std::cout << "<Expression'> ::= + <Term> <Expression'>\n";
     match({"Operator", "+"});
     Term();
     ExpressionPrime();
-  } else if (currentToken.token == "Operator" && currentToken.lexeme == "-") {
     if (debug)
-      std::cout << "<Expression'> ::= - <Term> <Expression'>\n";
+      std::cout << "<Expression'> ::= + <Term> <Expression'>\n";
+  } else if (currentToken.token == "Operator" && currentToken.lexeme == "-") {
     match({"Operator", "-"});
     Term();
     ExpressionPrime();
+    if (debug)
+      std::cout << "<Expression'> ::= - <Term> <Expression'>\n";
   } else {
     if (debug)
       std::cout << "<Expression'> ::= ε\n";
@@ -456,26 +457,26 @@ void ExpressionPrime() {
 
 // R26. <Term> ::= <Factor> <Term'>
 void Term() {
-  if (debug)
-    std::cout << "<Term> ::= <Factor> <Term'>\n";
   Factor();
   TermPrime();
+  if (debug)
+    std::cout << "<Term> ::= <Factor> <Term'>\n";
 }
 
 // <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | epsilon
 void TermPrime() {
   if (currentToken.token == "Operator" && currentToken.lexeme == "*") {
-    if (debug)
-      std::cout << "<Term'> ::= * <Factor> <Term'>\n";
     match({"Operator", "*"});
     Factor();
     TermPrime();
-  } else if (currentToken.token == "Operator" && currentToken.lexeme == "/") {
     if (debug)
-      std::cout << "<Term'> ::= / <Factor> <Term'>\n";
+      std::cout << "<Term'> ::= * <Factor> <Term'>\n";
+  } else if (currentToken.token == "Operator" && currentToken.lexeme == "/") {
     match({"Operator", "/"});
     Factor();
     TermPrime();
+    if (debug)
+      std::cout << "<Term'> ::= / <Factor> <Term'>\n";
   } else {
     // Epsilon production
     if (debug)
@@ -486,10 +487,10 @@ void TermPrime() {
 // R27. <Factor> ::= - <Primary> | <Primary>
 void Factor() {
   if (currentToken.token == "Operator" && currentToken.lexeme == "-") {
-    if (debug)
-      std::cout << "<Factor> ::= - <Primary>\n";
     match({"Operator", "-"});
     Primary();
+    if (debug)
+      std::cout << "<Factor> ::= - <Primary>\n";
   } else {
     if (debug)
       std::cout << "<Factor> ::= <Primary>\n";
@@ -504,11 +505,11 @@ void Primary() {
     match({"Identifier", ""});
 
     if (currentToken.token == "Separator" && currentToken.lexeme == "(") {
-      if (debug)
-        std::cout << "<Primary> ::= <Identifier> ( <IDs> )\n";
       match({"Separator", "("});
       IDs();
       match({"Separator", ")"});
+      if (debug)
+        std::cout << "<Primary> ::= <Identifier> ( <IDs> )\n";
 
     } else {
       if (debug)
@@ -525,11 +526,11 @@ void Primary() {
     if (debug)
       std::cout << "<Primary> ::= <Real>\n";
   } else if (currentToken.token == "Separator" && currentToken.lexeme == "(") {
-    if (debug)
-      std::cout << "<Primary> ::= ( <Expression> )\n";
     match({"Separator", "("});
     Expression();
     match({"Separator", ")"});
+    if (debug)
+      std::cout << "<Primary> ::= ( <Expression> )\n";
 
   } else if (currentToken.token == "Keyword" && currentToken.lexeme == "true") {
     match({"Keyword", "true"});

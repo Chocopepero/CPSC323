@@ -1,49 +1,41 @@
-[* Program to compute factorial and check if a number is prime *]
+[* Program to compute factorial and fibonacci using temporary variables *]
 $$
-function factorial (n integer)
+function factorial(n integer)
 {
-    if (n == 0) { 
-        return 1; 
-    } else { 
-        temp = n - 1;
-        return n * factorial(temp); 
+    if (n <= one) {
+        return one;
     } endif
+    temp = n - one;
+    result = factorial(temp);
+    return n * result;
 }
 
-function isPrime (n integer)
+function fibonacci(n integer)
 {
-    if (n < 2) { 
-        return false; 
-    } else { 
-        integer i;
-        i = 2;
-        while (i < n)
-        { 
-            if (n == i * (n / i))
-            { 
-                return false; 
-            } else { 
-                ; 
-            } endif
-            i = i + 1;
-        } endwhile
-        return true;
+    if (n <= zero) {
+        return zero;
     } endif
+    if (n == one) {
+        return one;
+    } endif
+    temp1 = n - one;
+    temp2 = n - two;
+    fib1 = fibonacci(temp1);
+    fib2 = fibonacci(temp2);
+    return fib1 + fib2;
 }
 $$
-integer num, fact;
+integer input, factResult, fibResult, temp, temp1, temp2, result, one, zero, two;
 $$
-scan(num);
-if (num >= 0)
-{ 
-    fact = factorial(num);
-    print(fact);
-    if (isPrime(num))
-    { 
-        print(num);
-    } else
-    { 
-        print(0);
-    } endif
+one = 1;
+zero = 0;
+two = 2;
+scan(input);
+if (input < two) {
+    factResult = factorial(input);
+    print(factResult);
+} else {
+    fibResult = fibonacci(input);
+    print(fibResult);
 } endif
 $$

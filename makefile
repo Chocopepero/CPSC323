@@ -2,12 +2,12 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -g
 SOURCES = main.cpp lexer.cpp syntax_analyzer.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
-TARGET = lexer
+TARGET = syntax_analyzer
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -static -o $@ $(OBJECTS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@

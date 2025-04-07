@@ -1,0 +1,485 @@
+Token: Separator	Lexeme: $$
+Token: Keyword	Lexeme: function
+Token: Identifier	Lexeme: factorial
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: n
+<IDs> ::= <Identifier>
+Token: Keyword	Lexeme: integer
+<Qualifier> ::= integer
+<Parameter> ::= <IDs> <Qualifier>
+<Parameter List> ::= <Parameter>
+<Opt Parameter List> ::= <Parameter List>
+Token: Separator	Lexeme: )
+<Opt Declaration List> ::= <Empty>
+Token: Separator	Lexeme: {
+Token: Keyword	Lexeme: if
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Operator	Lexeme: <=
+<Relop> ::= <=
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: one
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+<Condition> ::= <Expression> <Relop> <Expression>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: {
+Token: Keyword	Lexeme: return
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: one
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Return> ::= return <Expression> ;
+<Statement> ::= <Return>
+<Statement List> ::= <Statement>
+Token: Separator	Lexeme: }
+<Compound> ::= { <Statement List> }
+<Statement> ::= <Compound>
+Token: Keyword	Lexeme: endif
+<If> ::= if ( <Condition> ) <Statement> endif
+<Statement> ::= <If>
+Token: Identifier	Lexeme: temp
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+Token: Operator	Lexeme: -
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: one
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression'> ::= - <Term> <Expression'>
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Identifier	Lexeme: result
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: factorial
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: temp
+<IDs> ::= <Identifier>
+Token: Separator	Lexeme: )
+<Primary> ::= <Identifier> ( <IDs> )
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Keyword	Lexeme: return
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+Token: Operator	Lexeme: *
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: result
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term'> ::= * <Factor> <Term'>
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Return> ::= return <Expression> ;
+<Statement> ::= <Return>
+<Statement List> ::= <Statement>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+Token: Separator	Lexeme: }
+<Body> ::= { <Statement List> }
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+Token: Keyword	Lexeme: function
+Token: Identifier	Lexeme: fibonacci
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: n
+<IDs> ::= <Identifier>
+Token: Keyword	Lexeme: integer
+<Qualifier> ::= integer
+<Parameter> ::= <IDs> <Qualifier>
+<Parameter List> ::= <Parameter>
+<Opt Parameter List> ::= <Parameter List>
+Token: Separator	Lexeme: )
+<Opt Declaration List> ::= <Empty>
+Token: Separator	Lexeme: {
+Token: Keyword	Lexeme: if
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Operator	Lexeme: <=
+<Relop> ::= <=
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: zero
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+<Condition> ::= <Expression> <Relop> <Expression>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: {
+Token: Keyword	Lexeme: return
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: zero
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Return> ::= return <Expression> ;
+<Statement> ::= <Return>
+<Statement List> ::= <Statement>
+Token: Separator	Lexeme: }
+<Compound> ::= { <Statement List> }
+<Statement> ::= <Compound>
+Token: Keyword	Lexeme: endif
+<If> ::= if ( <Condition> ) <Statement> endif
+<Statement> ::= <If>
+Token: Keyword	Lexeme: if
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Operator	Lexeme: ==
+<Relop> ::= ==
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: one
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+<Condition> ::= <Expression> <Relop> <Expression>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: {
+Token: Keyword	Lexeme: return
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: one
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Return> ::= return <Expression> ;
+<Statement> ::= <Return>
+<Statement List> ::= <Statement>
+Token: Separator	Lexeme: }
+<Compound> ::= { <Statement List> }
+<Statement> ::= <Compound>
+Token: Keyword	Lexeme: endif
+<If> ::= if ( <Condition> ) <Statement> endif
+<Statement> ::= <If>
+Token: Identifier	Lexeme: temp1
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+Token: Operator	Lexeme: -
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: one
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression'> ::= - <Term> <Expression'>
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Identifier	Lexeme: temp2
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: n
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+Token: Operator	Lexeme: -
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: two
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression'> ::= - <Term> <Expression'>
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Identifier	Lexeme: fib1
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: fibonacci
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: temp1
+<IDs> ::= <Identifier>
+Token: Separator	Lexeme: )
+<Primary> ::= <Identifier> ( <IDs> )
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Identifier	Lexeme: fib2
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: fibonacci
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: temp2
+<IDs> ::= <Identifier>
+Token: Separator	Lexeme: )
+<Primary> ::= <Identifier> ( <IDs> )
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Keyword	Lexeme: return
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: fib1
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+Token: Operator	Lexeme: +
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: fib2
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression'> ::= + <Term> <Expression'>
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Return> ::= return <Expression> ;
+<Statement> ::= <Return>
+<Statement List> ::= <Statement>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+Token: Separator	Lexeme: }
+<Body> ::= { <Statement List> }
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+<Function Definitions> ::= <Function>
+<Function Definitions> ::= <Function> <Function Definitions>
+<Opt Function Definitions> ::= <Function Definitions>
+Token: Separator	Lexeme: $$
+Token: Keyword	Lexeme: integer
+<Qualifier> ::= integer
+Token: Identifier	Lexeme: input
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: factResult
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: fibResult
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: temp
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: temp1
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: temp2
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: result
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: one
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: zero
+Token: Separator	Lexeme: ,
+Token: Identifier	Lexeme: two
+<IDs> ::= <Identifier>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<IDs> ::= <Identifier>, <IDs>
+<Declaration> ::= <Qualifier> <IDs>
+Token: Separator	Lexeme: ;
+<Declaration List> ::= <Declaration> ;
+<Opt Declaration List> ::= <Declaration List>
+Token: Separator	Lexeme: $$
+Token: Identifier	Lexeme: one
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Integer	Lexeme: 1
+<Primary> ::= <Integer>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Identifier	Lexeme: zero
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Integer	Lexeme: 0
+<Primary> ::= <Integer>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Identifier	Lexeme: two
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Integer	Lexeme: 2
+<Primary> ::= <Integer>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Keyword	Lexeme: scan
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: input
+<IDs> ::= <Identifier>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: ;
+<Scan> ::= scan ( <IDs> );
+<Statement> ::= <Scan>
+Token: Keyword	Lexeme: if
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: input
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Operator	Lexeme: <
+<Relop> ::= <
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: two
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+<Condition> ::= <Expression> <Relop> <Expression>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: {
+Token: Identifier	Lexeme: factResult
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: factorial
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: input
+<IDs> ::= <Identifier>
+Token: Separator	Lexeme: )
+<Primary> ::= <Identifier> ( <IDs> )
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Keyword	Lexeme: print
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: factResult
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: ;
+<Print> ::= print ( <Expression> );
+<Statement> ::= <Print>
+<Statement List> ::= <Statement>
+<Statement List> ::= <Statement> <Statement List>
+Token: Separator	Lexeme: }
+<Compound> ::= { <Statement List> }
+<Statement> ::= <Compound>
+Token: Keyword	Lexeme: else
+Token: Separator	Lexeme: {
+Token: Identifier	Lexeme: fibResult
+Token: Operator	Lexeme: =
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: fibonacci
+Token: Separator	Lexeme: (
+Token: Identifier	Lexeme: input
+<IDs> ::= <Identifier>
+Token: Separator	Lexeme: )
+<Primary> ::= <Identifier> ( <IDs> )
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: ;
+<Assign> ::= <Identifier> = <Expression> ;
+<Statement> ::= <Assign>
+Token: Keyword	Lexeme: print
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: fibResult
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: ;
+<Print> ::= print ( <Expression> );
+<Statement> ::= <Print>
+<Statement List> ::= <Statement>
+<Statement List> ::= <Statement> <Statement List>
+Token: Separator	Lexeme: }
+<Compound> ::= { <Statement List> }
+<Statement> ::= <Compound>
+Token: Keyword	Lexeme: endif
+<If> ::= if ( <Condition> ) <Statement> else <Statement> endif
+<Statement> ::= <If>
+<Statement List> ::= <Statement>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+<Statement List> ::= <Statement> <Statement List>
+Token: Separator	Lexeme: $$
+<Rat25S> ::= $$ <Opt Function Definitions> $$ <Opt Declaration List> $$ <Statement List> $$

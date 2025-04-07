@@ -1,0 +1,28 @@
+Token: Separator	Lexeme: $$
+<Opt Function Definitions> ::= <Empty>
+Token: Separator	Lexeme: $$
+Token: Keyword	Lexeme: integer
+<Qualifier> ::= integer
+Token: Identifier	Lexeme: a
+<IDs> ::= <Identifier>
+<Declaration> ::= <Qualifier> <IDs>
+Token: Separator	Lexeme: ;
+<Declaration List> ::= <Declaration> ;
+<Opt Declaration List> ::= <Declaration List>
+Token: Separator	Lexeme: $$
+Token: Keyword	Lexeme: print
+Token: Separator	Lexeme: (
+<Factor> ::= <Primary>
+Token: Identifier	Lexeme: a
+<Primary> ::= <Identifier>
+<Term'> ::= ε
+<Term> ::= <Factor> <Term'>
+<Expression'> ::= ε
+<Expression> ::= <Term> <Expression'>
+Token: Separator	Lexeme: )
+Token: Separator	Lexeme: ;
+<Print> ::= print ( <Expression> );
+<Statement> ::= <Print>
+<Statement List> ::= <Statement>
+Token: Separator	Lexeme: $$
+<Rat25S> ::= $$ <Opt Function Definitions> $$ <Opt Declaration List> $$ <Statement List> $$
